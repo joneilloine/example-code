@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+    
+  <description>Webapp Reference Implementation tag library</description>
+  <display-name>Webapp Reference Implementation tags</display-name>
+  <tlib-version>1.0</tlib-version>
+  <short-name>l</short-name>
+  <uri>http://terracotta.org/jsp/examinator</uri>
+
+  <tag>
+    <description>
+       Creates an absolute URL towards a controller that is annotated with @RequestMapping
+    </description>
+    <name>ctrUrl</name>
+    <tag-class>org.terracotta.reference.exam.taglib.ControllerUrlTag</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+        <description>
+			The class of the controller that will be linked to.
+        </description>
+        <name>class</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>

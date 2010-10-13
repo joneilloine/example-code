@@ -1,0 +1,37 @@
+<con:tc-config xmlns:con="http://www.terracotta.org/config">
+	<servers>
+		<server host="%i" name="localhost">
+			<dso-port>9510</dso-port>
+			<jmx-port>9520</jmx-port>
+			<data>terracotta/server-data</data>
+			<logs>terracotta/server-logs</logs>
+		</server>
+	</servers>
+	<clients>
+		<logs>terracotta/client-logs</logs>
+	</clients>
+	<application>
+		<spring>
+			<jee-application name="*">
+				<application-contexts>
+					<application-context>
+						<paths>
+							<path>applicationContext.xml</path>
+						</paths>
+						<beans>
+							<bean name="store" />
+						</beans>
+					</application-context>
+				</application-contexts>
+				<instrumented-classes>
+				  <include>
+				  	<class-expression>org.terracotta.book.inventory.util.DepartmentByNameComparator</class-expression>
+				   </include>
+				  <include>
+				  	<class-expression>org.terracotta.book.inventory.util.ProductByNameComparator</class-expression>
+				  </include>
+				</instrumented-classes>
+			</jee-application>
+		</spring>
+	</application>
+</con:tc-config>

@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <link rel="Stylesheet" media="screen" href="data/styles.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2/jquery.min.js"></script>
+        <script type="text/javascript" src="../dist/jquery.utils.js"></script>
+
+        <script type="text/javascript">
+$(function(){
+    $('div.subsection:not(:eq(0))').hide();
+    $.anchorHandler
+        .add(/#demo\-.*/, function(){
+            $('div.subsection:visible').hide();
+            $(this.hash).fadeIn();
+            return false; });
+});
+        </script>
+        <style type="text/css">
+        .subsection {
+            text-align:center;
+            padding:10px;
+            -moz-border-radius:11px;
+        }
+        </style>
+    </head>
+    <body id="body">
+        <h2>jquery.anchorHandler.js</h2>
+        <div class="copyright">Copyright (c) 2007-2008 Maxime Haineault (<a href="http://haineault.com/" target="_blank">haineault.com</a>)</div>
+        <div class="license">MIT License ~ <a href="http://www.opensource.org/licenses/mit-license.php" target="_blank">http://www.opensource.org/licenses/mit-license.php</a></div>
+        <a class="related-links documentation" href="http://code.google.com/p/jquery-utils/wiki/AnchorHandler">Documentation</a>
+        <h3>Usage</h3>
+        <pre>$(function(){
+    $('div.subsection:not(:eq(0))').hide();
+    $.anchorHandler
+        .add(/#demo\-.*/, function(){
+            $('div.subsection:visible').hide();
+            $(this.hash).fadeIn();
+            return false; });
+});</pre>
+        <h3>html</h3>
+        <pre>&lt;p&gt;
+    &lt;a href="#demo-1"&gt;demo 1&lt;/a&gt;
+    &lt;a href="#demo-2"&gt;demo 2&lt;/a&gt;
+    &lt;a href="#demo-3"&gt;demo 3&lt;/a&gt;
+&lt;/p&gt;
+&lt;div class="demos"&gt;
+    &lt;div id="demo-1" class="subsection" style="background:#ccf;"&gt;demo 1&lt;/div&gt;
+    &lt;div id="demo-2" class="subsection" style="background:#efc;"&gt;demo 2&lt;/div&gt;
+    &lt;div id="demo-3" class="subsection" style="background:#c9f;"&gt;demo 3&lt;/div&gt;
+&lt;/div&gt;</pre>
+        <h3>Demo</h3>
+        <div class="demo">
+            <p>
+                <a href="#demo-1">test 1</a>
+                <a href="#demo-2">test 2</a>
+                <a href="#demo-3">test 3</a>
+            </p>
+            <div class="demos">
+                <div id="demo-1" class="subsection" style="background:#ccf;">demo 1</div>
+                <div id="demo-2" class="subsection" style="background:#efc;">demo 2</div>
+                <div id="demo-3" class="subsection" style="background:#c9f;">demo 3</div>
+            </div>
+        </div>
+        <style>
+            .demos {
+                font-size:4em;
+                font-weight:bold;
+                padding:20px;
+            }
+        </style>
+    </body>
+</html>

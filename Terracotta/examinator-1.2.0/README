@@ -1,0 +1,115 @@
+This README file shows the basic setup needed to run Examinator.
+
+See the Examinator documentation at 
+http://www.terracotta.org/web/display/orgsite/Web+App+Reference+Implementation
+for detailed instructions and the latest software versions.
+
+NOTE: Scripts with extension .sh should be used with Linux or Cygwin.
+      For Windows, use the equivalent .bat scripts.
+
+
+----------------------------------
+A. Run H2 Database server
+----------------------------------
+
+1. Start H2 database server
+   cd <Examinator home directory>
+   bin/h2db.sh start
+   
+2. Create the database "exam" (only need to run it once)
+   bin/h2db.sh create-exam-db
+   
+Other operations:
+  - You can stop H2 database server with
+     bin/h2db.sh stop
+  
+  - Run H2 console and look at "exam" database
+     bin/h2db.sh console
+    
+     Leave everything default but change "JDBC URL" to:
+     jdbc:h2:tcp://localhost/target/data/exam
+
+----------------------------------
+B. Install and set up Terracotta
+----------------------------------
+
+1. Download and install Terracotta 3.1.0
+
+2. Download Terracotta Integration Modules (TIM):
+
+   cd <Terracotta Installation Directory>
+   bin/tim-get.sh install-for <examinator-install-dir>/tc-config.xml 
+
+3. Start the Terracotta server instance:
+
+   bin/start-tc-server.sh &
+
+NOTE: You can stop the Terracotta server instance with:
+
+   bin/stop-tc-server.sh
+
+----------------------------------
+C. Run the Examinator webapp
+----------------------------------
+
+1. Set the environment variable TC_INSTALL_DIR to your Terracotta installation directory.
+
+In Linux:
+   export TC_INSTALL_DIR=/path/to/terracotta
+
+In Cygwin:
+   export TC_INSTALL_DIR=c:/path/to/terracotta
+
+In a Windows CMD shell:
+   set TC_INSTALL_DIR=c:/path/to/terracotta
+
+2. From the Examinator home directory, start the two Jetty servers:
+
+   bin/startCluster.sh
+
+NOTE: Check console.log under work/8080/logs and work/8081/logs  
+to make sure both Jetty instances finish starting up.
+Jetty is running when you see this line in the log:
+
+   INFO: Started SelectChannelConnector@0.0.0.0:8080
+
+3. To test, use a web browser to connect to Examinator on
+   TCP port 8080 or 8081 of the Jetty servers.
+
+a. Go to http://localhost:8080/examinator.
+
+b. Log in as "student1" password "passwd1"
+
+c. Start an exam and answer a few questions.
+
+d. Go to http://localhost:8081/examinator.
+
+e. Log in as the same student1 and take the same exam.
+You should see the exam in progress. Questions already answered are still marked.
+
+4. To stop the cluster:
+
+   bin/stopCluster.sh
+
+----------------------------------
+D. Working with Jetty
+----------------------------------
+The following can be executed from the Examinator home directory.
+
+To stop one instance of Jetty while allowing the other to continue running:
+
+   bin/stopNode.sh [port]
+
+where [port] is either 8080 or 8081.
+
+To Start a single Jetty server with Terracotta disabled:
+
+   bin/startNode.sh [port]
+
+where [port] is either 8080 or 8081.
+
+To Start a single Jetty server with Terracotta enabled:
+
+   bin/startNode.sh [port] -tc
+
+where [port] is either 8080 or 8081.

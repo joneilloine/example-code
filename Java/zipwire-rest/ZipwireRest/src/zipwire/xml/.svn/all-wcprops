@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml
+END
+XmlTags.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/XmlTags.java
+END
+Xml.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/Xml.java
+END
+XmlClump.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/XmlClump.java
+END
+XmlNamingRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/XmlNamingRule.java
+END
+XmlFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/XmlFormatter.java
+END
+XmlInvocationHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/XmlInvocationHandler.java
+END
+DefaultXmlFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/xml/DefaultXmlFormatter.java
+END

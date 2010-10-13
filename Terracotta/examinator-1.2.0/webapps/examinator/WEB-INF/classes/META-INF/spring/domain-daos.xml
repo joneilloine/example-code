@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+		
+	<context:annotation-config />
+	
+	<import resource="data-access.xml" />
+	
+	<!-- bean post-processor for JPA annotations -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	
+	<bean id="daoHelper" class="org.terracotta.reference.exam.dao.impl.DaoHelper" />
+
+	
+	<bean id="userDao" class="org.terracotta.reference.exam.dao.impl.UserDaoImpl">
+		<constructor-arg ref="daoHelper" />
+		<constructor-arg ref="userRoleDao" />
+		<constructor-arg ref="examResultDao" />
+	</bean>
+	
+	<bean id="userRoleDao" class="org.terracotta.reference.exam.dao.impl.UserRoleDaoImpl">
+		<constructor-arg ref="daoHelper" />
+	</bean>
+	
+	<bean id="examDao" class="org.terracotta.reference.exam.dao.impl.ExamDaoImpl">
+		<constructor-arg ref="daoHelper" />
+	</bean>
+	
+	<bean id="examResultDao" class="org.terracotta.reference.exam.dao.impl.ExamResultDaoImpl">
+		<constructor-arg ref="daoHelper" />
+		<constructor-arg ref="transactionManager" />
+	</bean>
+</beans>

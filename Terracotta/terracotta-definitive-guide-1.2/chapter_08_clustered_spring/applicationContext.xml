@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-lazy-init="false">
+  <bean id="stringUtil" class="org.terracotta.book.inventory.util.StringUtil" singleton="true"/>
+  
+  <bean id="productByNameComparator" class="org.terracotta.book.inventory.util.ProductByNameComparator" singleton="true"/>
+  <bean id="departmentByNameComparator" class="org.terracotta.book.inventory.util.DepartmentByNameComparator" singleton="true"/>
+
+  
+  <bean id="inventory" class="org.terracotta.book.inventory.entity.Inventory" singleton="true">
+  	<constructor-arg><ref bean="productByNameComparator"/></constructor-arg>
+  </bean>
+  
+  <bean id="departmentFactory" class="org.terracotta.book.inventory.entity.DepartmentFactory" singleton="true">
+  	<constructor-arg><ref bean="productByNameComparator"/></constructor-arg>
+		<constructor-arg><ref bean="inventory"/></constructor-arg>	
+  </bean>
+
+  <bean id="departments" class="org.terracotta.book.inventory.entity.Departments" singleton="true">
+    <constructor-arg><ref bean="departmentByNameComparator"/></constructor-arg>
+    <constructor-arg><ref bean="departmentFactory"/></constructor-arg>
+  </bean>
+  
+  <bean id="store" class="org.terracotta.book.inventory.entity.Store" singleton="true">
+	  <constructor-arg><ref bean="departments"/></constructor-arg>
+  	<constructor-arg><ref bean="inventory"/></constructor-arg>
+  </bean>
+  
+  <bean id="io" class="org.terracotta.book.inventory.cli.IOImpl" singleton="true"/>
+  <bean id="currencyFormatFactory" class="org.terracotta.book.inventory.util.CurrencyFormatFactory" singleton="true"/>
+  
+  <bean id="productDisplay" class="org.terracotta.book.inventory.display.ProductDisplay" singleton="true">
+  	<constructor-arg><ref bean="io"/></constructor-arg>
+  	<constructor-arg><ref bean="stringUtil"/></constructor-arg>
+  	<constructor-arg><ref bean="currencyFormatFactory"/></constructor-arg>
+  	<!--  SKU width -->
+  	<constructor-arg type="int"><value>8</value></constructor-arg>
+  	<!-- name width -->
+  	<constructor-arg type="int"><value>30</value></constructor-arg>
+  	<!-- price width -->
+  	<constructor-arg type="int"><value>10</value></constructor-arg>
+    <!-- inventory level width -->
+    <constructor-arg type="int"><value>10</value></constructor-arg>
+  </bean>
+  
+  <bean id="departmentDisplay" class="org.terracotta.book.inventory.display.DepartmentDisplay" singleton="true">
+  	<constructor-arg><ref bean="io"/></constructor-arg>
+  	<constructor-arg><ref bean="productDisplay"/></constructor-arg>
+  </bean>
+
+  <bean id="inventoryDisplay" class="org.terracotta.book.inventory.display.InventoryDisplay" singleton="true">
+  	<constructor-arg><ref bean="io"/></constructor-arg>
+  	<constructor-arg><ref bean="productDisplay"/></constructor-arg>
+  </bean>
+  
+  <bean id="cliHelper" class="org.terracotta.book.inventory.cli.CLIHelper" singleton="true">
+  	<constructor-arg><ref bean="io"/></constructor-arg>
+  </bean>
+  
+	<bean id="cli" class="org.terracotta.book.inventory.cli.CLI" singleton="true">
+		<constructor-arg><ref bean="cliHelper"/></constructor-arg>
+	  <constructor-arg><ref bean="departmentDisplay"/></constructor-arg>
+	  <constructor-arg><ref bean="productDisplay"/></constructor-arg>
+	  <constructor-arg><ref bean="inventoryDisplay"/></constructor-arg>
+	  <constructor-arg><ref bean="store"/></constructor-arg>
+	</bean>
+	
+</beans>

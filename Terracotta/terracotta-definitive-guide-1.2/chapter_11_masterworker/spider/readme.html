@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title>Distributed Web Spider - Demo for the Terracotta WorkManager</title>
+</head>
+<body>
+
+<h1>Distributed Web Spider - Demo for the Terracotta WorkManager</h1>
+
+<h2>About</h2>
+This application implements a distributed web spider and is a demo applications for the Terracotta WorkManager.
+<p>
+
+<h2>Build Instructions</h2>
+First download and install <a href="http://www.terracotta.org/confluence/display/orgsite/Download">Terracotta DSO</a>.
+<p> 
+This sample application requires <b>Maven 2</b> and <b>Java 5</b> and needs to be built before you can run it.
+<p> 
+First download and install <b>Maven 2</b>. Then perform these steps: 
+<ol>
+  <li> 
+    Step up into the parent (workmanager) directory and invoke <samp>mvn install</samp> to install the Maven pom.xml files, build the workmanager and spider jars and install these into your local Maven repository.
+  </li>
+  <li>
+      Step down into the spider directory and invoke <samp>mvn assembly:assembly</samp> to build the application and the distribution. 
+  </li>
+</ol>
+    
+<h2>Run Instructions </h2>
+<ol>
+  <li> 
+    <p>Set the TC_HOME env variable to point to the root of the Terracotta DSO installation directory.
+  </li>
+  <li>Start a Terracotta Server from the <code>$TC_HOME/dso/samples</code> directory. 
+    <p> Unix: <samp>./start-demo-server.sh &</samp><br>
+      Windows: <samp>start-demo-server.bat</samp></li>
+  <li> 
+    <p> Start a Master: 
+    <p> Unix: <samp>master.sh </samp><br>
+      Windows: <samp>master.bat</samp><br>
+      <br>
+      You have to feed it with a colon separated list of all the routing IDs using 
+      the '-i' option: '-i 0:1:2'. Routing IDs are simply used to associate workers 
+      with queues. If you plan to run the demo with two workers, you would pass 
+      '-i 0:1' as arguments to the command.<br>
+      You can also feed it an optional "fail-over" routing ID, which specifies 
+      a queue and worker that will receive failed work, this is done by providing the
+      '-f' option together with a routing ID. 
+    <p> By default it will let the web spider crawl the www.terracotta.org web 
+      site, but if you want to change that you can the master.bat/master.sh script.
+    
+  <li>Start one or more Workers: 
+    <p> Unix: <samp>worker.sh </samp><br>
+      Windows: <samp>worker.bat</samp> 
+    <p> You have to feed it with a routing ID for each worker (which will be the 
+      queue that the worker should use, has to be one that is stated in the master 
+      '-i' option routing ID list. <br>
+    
+</ol>
+E.g. something like: 
+<pre>
+master.bat -i route1:route2
+
+worker.bat route1 
+worker.bat route2 
+</pre>         
+
+<p class=footer>
+   <a class=footer href="http://www.terracottatech.com/">
+   www.terracottatech.com<br>copyright &copy; 2006 Terracotta, Inc.
+   </a></p>
+</body>
+</html>

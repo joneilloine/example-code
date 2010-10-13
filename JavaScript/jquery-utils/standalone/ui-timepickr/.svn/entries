@@ -1,0 +1,73 @@
+8
+
+dir
+387
+http://jquery-utils.googlecode.com/svn/trunk/standalone/ui-timepickr
+http://jquery-utils.googlecode.com/svn
+
+
+
+2008-12-01T23:27:56.122357Z
+387
+haineault@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+42e6dbca-fe45-0410-8bc7-9300d0be77b8
+
+build.yml
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+8ba34bfd6285e9f3be5d9933a63093ee
+2008-11-13T06:18:38.257246Z
+275
+hhh333
+
+LICENSE
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2008-10-29T11:24:55.006619Z
+236
+hhh333
+
+dist
+dir
+
+demo
+dir
+
+page
+dir
+
+README
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2008-10-29T11:24:55.006619Z
+236
+hhh333
+

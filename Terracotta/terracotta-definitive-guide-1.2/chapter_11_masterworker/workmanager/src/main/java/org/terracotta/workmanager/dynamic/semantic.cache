@@ -1,0 +1,15 @@
+;; Object dynamic/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "dynamic/"
+  :tables (list 
+   (semanticdb-table "LoadBalancingRouter.java"
+    :major-mode 'jde-mode
+    :tags '(("org.terracotta.workmanager.dynamic" package nil nil [1 44]) ("java.util.Map" include nil (dependency-file none) [46 67]) ("java.util.Set" include nil (dependency-file none) [68 89]) ("org.terracotta.workmanager.pipe.Pipe" include nil (dependency-file none) [91 135]) ("org.terracotta.workmanager.pipe.PipeManager" include nil (dependency-file none) [136 187]) ("org.terracotta.workmanager.routing.RoutableWorkItem" include nil (dependency-file none) [188 247]) ("org.terracotta.workmanager.routing.Router" include nil (dependency-file none) [248 297]) ("commonj.work.Work" include nil (dependency-file none) [299 324]) ("commonj.work.WorkEvent" include nil (dependency-file none) [325 355]) ("commonj.work.WorkException" include nil (dependency-file none) [356 390]) ("commonj.work.WorkListener" include nil (dependency-file none) [391 424]))
+    :file "LoadBalancingRouter.java"
+    :pointmax 3690
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0pre3"
+  :semanticdb-version "2.0pre3"
+  )

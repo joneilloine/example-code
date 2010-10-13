@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/rest
+END
+ApacheRestConnection.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/rest/ApacheRestConnection.java
+END
+Resource.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/rest/Resource.java
+END
+RestConnection.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/3/trunk/ZipwireRest/src/zipwire/rest/RestConnection.java
+END

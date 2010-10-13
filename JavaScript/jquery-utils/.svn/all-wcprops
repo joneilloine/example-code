@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 23
+/svn/!svn/ver/387/trunk
+END
+build.yml
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/384/trunk/build.yml
+END
+version.txt
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/227/trunk/version.txt
+END
+build.py
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/255/trunk/build.py
+END
+MIT-LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/106/trunk/MIT-LICENSE.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/!svn/ver/233/trunk/Makefile
+END

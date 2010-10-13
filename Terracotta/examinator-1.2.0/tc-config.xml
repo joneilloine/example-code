@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tc:tc-config xmlns:tc="http://www.terracotta.org/config"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.terracotta.org/config http://www.terracotta.org/schema/terracotta-4.xsd">
+  <servers>
+    <server name="localhost" host="localhost">
+      <dso-port>9510</dso-port>
+      <jmx-port>9520</jmx-port>
+      <data>target/terracotta/server/data</data>
+      <logs>target/terracotta/server/logs</logs>
+      <statistics>target/terracotta/server/statistics</statistics>
+    </server>
+  </servers>
+
+  <!-- ********************************************* -->
+  <!-- * Any app-level config changes made must be * -->
+  <!-- * be mirrored in tc-config-prod.xml as well * -->
+  <!-- ********************************************* -->
+
+  <clients>
+    <logs>target/terracotta/clients/logs/%(tc.nodeName)</logs>
+    <statistics>target/terracotta/clients/statistics/%(tc.nodeName)</statistics>
+    
+    <modules>
+      <!-- This modules list is different between tc-config.xml and tc-config-prod.xml -->      
+      <!-- The prod version uses tomcat amd the dev version jetty -->
+      <module name="tim-jetty-6.1" version="2.0.0"/>
+
+      <module name="tim-hibernate-entity-3.3" version="1.4.0"/>
+      <module name="tim-hibernate-cache-3.3" version="1.0.0"/>
+      <module name="tim-annotations" version="1.4.0"/>
+      <module name="tim-spring-security-2.0" version="1.2.0"/>
+      <module name="tim-async-processing" version="1.2.0"/>
+      <module name="tim-concurrent-collections" version="1.2.0"/>
+      <module name="tim-distributed-cache" version="1.2.0"/>
+      <module name="tim-spring-webflow-2.0" version="1.2.0"/>
+    </modules>
+  </clients>
+
+  <application>
+    <dso>
+      <app-groups>
+        <!-- Allow examinator roots to be shared with other apps, such as examonitor -->
+        <app-group name="examinator-group">
+          <web-application>examinator</web-application>
+        </app-group>
+      </app-groups>
+      
+      <web-applications>
+        <web-application>examinator</web-application>
+      </web-applications>
+    </dso>
+    
+    
+  </application>
+  
+</tc:tc-config>

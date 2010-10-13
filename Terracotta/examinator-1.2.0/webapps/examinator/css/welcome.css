@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+div.clickable {
+	border:1px solid white;
+	display:block;
+	height:150px;
+	margin:0;
+	padding: 1px 120px 10px 10px;
+	width: 620px;
+	max-width: 620px;
+	text-align:justify;
+	background: #ffffff url('/examinator/images/btn_red_go.png') no-repeat 645px 40px;
+}
+div.clickable:hover {
+	background: #DED6CC url('/examinator/images/btn_green_go.png') no-repeat 646px 40px;
+	border: 1px solid #000000;
+}
+div.welcomeText {
+	width: 500px;
+	max-width: 500px;
+	padding:8px 8px 8px 95px;
+}
+
+/* -----------------------------
+Just for the Landing Page, override some stuff from styles.css
+------------------------------*/
+.leftmenu .colleft {
+	right: 90%; /* right column width */
+}
+
+.leftmenu .col1 {
+	width: 95%; /* right column content width */
+}
+
+h1 {
+	line-height: 100%;
+}

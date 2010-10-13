@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+        <title>frequency decoder ~ Unobtrusive JavaScript datePicker widgit demo</title>
+        <script type="text/javascript" src="./js/datepicker.js"></script>
+        <link href="./css/demo.css"       rel="stylesheet" type="text/css" />
+        <link href="./css/datepicker.css" rel="stylesheet" type="text/css" />
+        
+        <script type="text/javascript">
+        
+/* The following function creates a new input field and then calls datePickerController.create();
+   to dynamically create a new date-picker widgit for it */
+function newline() {
+        var total = document.getElementById("newline-wrapper").getElementsByTagName("table").length;
+
+        total++;
+        
+        // Clone the first div in the series
+        var tbl = document.getElementById("newline-wrapper").getElementsByTagName("table")[0].cloneNode(true);
+
+        // DOM inject the wrapper div
+        document.getElementById("newline-wrapper").appendChild(tbl);
+
+        var buts = tbl.getElementsByTagName("button");
+        if(buts.length) {
+                buts[0].parentNode.removeChild(buts[0]);
+                buts = null;
+        }
+
+        // Reset the cloned label's "for" attributes
+        var labels = tbl.getElementsByTagName('label');
+        
+        for(var i = 0, lbl; lbl = labels[i]; i++) {
+                // Set the new labels "for" attribute
+                if(lbl["htmlFor"]) {
+                        lbl["htmlFor"] = lbl["htmlFor"].replace(/[0-9]+/g, total);
+                } else if(lbl.getAttribute("for")) {
+                        lbl.setAttribute("for", lbl.getAttribute("for").replace(/[0-9]+/, total));
+                }
+        }
+        
+        // Reset the input's name and id attributes
+        var inputs = tbl.getElementsByTagName('input');
+        for(var i = 0, inp; inp = inputs[i]; i++) {
+                // Set the new input's id and name attribute
+                inp.id = inp.name = inp.id.replace(/[0-9]+/g, total);
+                if(inp.type == "text") inp.value = "";
+        }
+
+        // Call the create method to create and associate a new date-picker widgit with the new input
+        datePickerController.create();
+
+        // No more than 5 inputs
+        if(total == 5) document.getElementById("newline").style.display = "none";
+
+        // Stop the event
+        return false;
+}
+
+function createNewLineButton() {
+        var nlw = document.getElementById("newline-wrapper");
+        
+        var a = document.createElement("a");
+        a.href="#";
+        a.id = "newline";
+        a.title = "Create New Input";
+        a.onclick = newline;
+        nlw.parentNode.appendChild(a);
+        
+        a.appendChild(document.createTextNode("+"));
+        a = null;
+}
+
+datePickerController.addEvent(window, 'load', createNewLineButton);
+
+        </script>
+
+</head>
+<body>
+
+  <form id="testform" method="" action="">
+  <h1>Unobtrusive JavaScript date-picker widgit</h1>
+    <h2>Keyboard access</h2>
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+          <th class="firstup">Key&#160;Combination</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd></td>
+          <td>Day navigation</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>&uarr;</kbd></td>
+          <td>Next year</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>&darr;</kbd></td>
+          <td>Previous year</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>&rarr;</kbd></td>
+          <td>Next month</td>
+        </tr>
+        <tr>
+          <td><kbd>Ctrl</kbd> + <kbd>&larr;</kbd></td>
+          <td>Previous month</td>
+        </tr>
+        <tr>
+          <td><kbd>Space</kbd></td>
+          <td>Todays date</td>
+        </tr>
+        <tr>
+          <td><kbd>Esc</kbd></td>
+          <td>Close date-picker (no date selected)</td>
+        </tr>
+        <tr>
+          <td><kbd>Return</kbd></td>
+          <td>Select highlighted date and close date-picker</td>
+        </tr>
+        <tr>
+          <td><kbd>2</kbd> - <kbd>7</kbd></td>
+          <td>Select the corresponding day as the first day of the week</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>DatePicker Demos</h2>
+    
+    <fieldset>
+      <legend>Single Input DatePicker</legend>
+      <p><code>class=&#8220;format-d-m-y divider-dash highlight-days-12 range-low-today no-transparency&#8221;</code></p>
+      <label for="dp-normal-1">Date :</label>
+      <p class="lastup"><input type="text" class="w8em format-d-m-y divider-dash highlight-days-12 range-low-today no-transparency" id="dp-normal-1" name="dp-normal-1" value="" maxlength="10" /></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Split Input DatePicker</legend>
+      <p><code>class="highlight-days-67 range-low-2006-08-11 range-high-2009-09-13 disable-days-12 split-date"</code></p>
+      <div id="newline-wrapper">
+        <!--
+
+        Standards evangelists beware, I'm using a table for layout...
+        
+        Please send all comments/suggestions to itsOnlyABleedenDemo@frequency-decoder.com
+        
+        -->
+        <table class="split-date-wrap" cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            <tr>
+              <td><input type="text" class="w2em" id="date-1-dd" name="date-1-dd" value="" maxlength="2" />/<label for="date-1-dd">DD</label></td>
+              <td><input type="text" class="w2em" id="date-1-mm" name="date-1-mm" value="" maxlength="2" />/<label for="date-1-mm">MM</label></td>
+              <td><input type="text" class="w4em highlight-days-67 range-low-2006-08-11 range-high-2009-09-13 disable-days-12 split-date" id="date-1" name="date-1" value="" maxlength="4" /><label for="date-1">YYYY</label></td>
+              <td> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
+    <p class="al-center">View the related &#8220;<a href="http://www.frequency-decoder.com/2006/10/02/unobtrusive-date-picker-widgit-update/">language in the lab</a>&#8221; post for this demo.</p>
+  </form>
+
+</body>
+</html>
+

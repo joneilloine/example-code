@@ -1,0 +1,40 @@
+8
+
+dir
+38
+http://zipwire-rest.googlecode.com/svn/trunk/ZipwireRest/integration/zipwire/rest
+http://zipwire-rest.googlecode.com/svn
+
+
+
+2009-01-13T21:07:33.551100Z
+3
+craigmdavidson
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+64216a56-e0d1-11dd-9759-139c9ab14fc6
+
+TestRestServiceIntegration.java
+file
+
+
+
+
+2009-01-27T04:27:48.000000Z
+6f68333e455e3fc772f065dcce62a198
+2009-01-13T21:07:33.551100Z
+3
+craigmdavidson
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+        <title>frequency decoder ~ datePicker reservation demo</title>
+        <script type="text/javascript" src="./js/datepicker.js"></script>
+        <link href="./css/demo.css"       rel="stylesheet" type="text/css" />
+        <link href="./css/datepicker.css" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript">
+/*
+        A "Reservation Date" example using two datePickers
+        --------------------------------------------------
+
+        * Functionality
+        
+        1. When the page loads:
+                - We clear the value of the two inputs (to clear any values cached by the browser)
+                - We set "onchange" event handler on the startDate input to call the setReservationDates function
+        2. When a start date is selected
+                - We set the low range of the endDate datePicker to be the start date the user has just selected
+                - If the endDate input already has a date stipulated and the date falls before the new start date then we clear the input's value
+                
+        * Caveats (aren't there always)
+
+        - This demo has been written for dates that have NOT been split across three inputs
+        
+*/
+
+function makeTwoChars(inp) {
+        return String(inp).length < 2 ? "0" + inp : inp;
+}
+
+function initialiseInputs() {
+        // Clear any old values from the inputs (that might be cached by the browser after a page reload)
+        document.getElementById("sd").value = "";
+        document.getElementById("ed").value = "";
+
+        // Add the onchange event handler to the start date input
+        document.getElementById("sd").onchange = setReservationDates;
+        
+        setLowRangeToBeSixWeeksAfterToday();
+}
+function setLowRangeToBeSixWeeksAfterToday() {
+        if(!("sd" in datePickerController.datePickers)) {
+                setTimeout("setLowRangeToBeSixWeeksAfterToday()", 50);
+                return;
+        }
+        
+        var dt = new Date();
+        dt.setDate(dt.getDate() +  (6 * 7));
+        
+        var stringDt = dt.getFullYear() + String(makeTwoChars(dt.getMonth())) + makeTwoChars(dt.getDate());
+
+        datePickerController.datePickers["sd"].setRangeLow(stringDt);
+        datePickerController.datePickers["ed"].setRangeLow(stringDt);
+}
+
+function setReservationDates(e) {
+        // Check the associated datePicker object is available (be safe)
+        if(!("sd" in datePickerController.datePickers)) {
+                return;
+        }
+        
+        // Check the value of the input is a date of the correct format
+        var dt = datePickerController.dateFormat(this.value, datePickerController.datePickers["sd"].format.charAt(0) == "m");
+        
+        // If the input's value cannot be parsed as a valid date then return
+        if(dt == 0) return;
+
+        // Grab the value set within the endDate input and parse it using the dateFormat method
+        // N.B: The second parameter to the dateFormat function, if TRUE, tells the function to favour the m-d-y date format
+        var edv = datePickerController.dateFormat(document.getElementById("ed").value, datePickerController.datePickers["ed"].format.charAt(0) == "m");
+
+        // Grab the end date datePicker Objects
+        var ed = datePickerController.datePickers["ed"];
+
+        ed.setRangeLow( dt );
+        
+        // If theres a value already present within the end date input and it's smaller than the start date
+        // then clear the end date value
+        if(edv < dt) {
+                document.getElementById("ed").value = "";
+        }
+}
+
+datePickerController.addEvent(window, 'load', initialiseInputs);
+        </script>
+</head>
+<body>
+<form id="testform" method="" action="">
+  <h1>Unobtrusive JavaScript date-picker widgit</h1>
+    <h2>Reservation Demo</h2>
+    <fieldset>
+      <label for="sd">Start Date : </label>
+      <p><input type="text" class="w8em format-d-m-y highlight-days-67 range-low-today" name="sd" id="sd" value="" maxlength="10" /></p>
+      <label for="ed">End Date : </label>
+      <p class="lastup"><input type="text" class="w8em format-d-m-y highlight-days-67 range-low-today" name="ed" id="ed" value="" maxlength="10" /></p>
+    </fieldset>
+    <p class="al-center">View the related &#8220;<a href="http://www.frequency-decoder.com/2006/10/02/unobtrusive-date-picker-widgit-update/">language in the lab</a>&#8221; post for this demo.</p>
+  </form>
+</body>
+</html>
+

@@ -1,0 +1,12 @@
+# Put this at the end of the iptables script
+# Log everything that was dropped
+-A RH-Firewall-1-INPUT -j LOG
+-A RH-Firewall-1-INPUT -j DROP
+
+# Different mechanism for doing logging (must also set up log level 7 in /etc/syslog.conf)
+/sbin/iptables -A INPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped by firewall: "
+/sbin/iptables -A OUTPUT -m limit --limit 15/minute -j LOG --log-level 7 --log-prefix "Dropped by firewall: "
+
+# /etc/syslog.conf
+# Save firewall messages to firewall.log
+kern.=debug			/var/log/firewall.log

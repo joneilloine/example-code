@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+div.section {
+padding: 1mm;
+margin: 1mm;
+}
+
+div.NestedSection {
+border: medium double rgb(0,25,180);
+}
+
+div.Question {
+border: thin dotted rgb(0,0,255);
+}
+
+input.hidden {
+visibility: hidden;
+}
+
+.remainingTime {
+	font-weight: bold;
+	font-size: 18pt;
+	color: green;
+}
+
+.passed {
+	font-weight: bold;
+	font-size: 14pt;
+	color: green;
+}
+
+.failed {
+	font-weight: bold;
+	font-size: 14pt;
+	color: red;
+}
+
+span.error {
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+}

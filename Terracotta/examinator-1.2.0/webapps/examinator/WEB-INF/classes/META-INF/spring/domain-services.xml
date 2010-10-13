@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<import resource="domain-daos.xml" />
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:mail.properties" />
+		<!-- This PPC does not need to resolve every placeholder; needed to support multiple PPCs -->
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<context:annotation-config />
+
+
+
+	<!-- ======== -->
+	<!-- services -->
+	<!-- ======== -->
+
+    <!-- This file doesn't actually exist in svn in the current directory. One of either the "dev" or "prod" -->
+    <!-- versions of it will be packaged in the WAR -->
+    <import resource="bootstrap-service.xml" />
+    
+	<bean id="registrationService" class="org.terracotta.reference.exam.service.impl.DefaultRegistrationService">
+		<property name="signupConfirmationTemplateName" value="registration/confirmation.ftl" />
+		<property name="signupConfirmationSubject" value="${subject.signup.confirmation}" />
+		<property name="signupConfirmationFromEmail" value="${examinator.from.email}" />
+	</bean>
+	<bean id="passwordResetService" class="org.terracotta.reference.exam.service.impl.DefaultPasswordResetService">
+		<property name="requestConfirmationTemplateName" value="passwordreset/confirmation.ftl" />
+		<property name="requestConfirmationSubject" value="${subject.password.reset.confirmation}" />
+		<property name="requestConfirmationFromEmail" value="${examinator.from.email}" />
+		<property name="resetDoneTemplateName" value="passwordreset/reset-done.ftl" />
+		<property name="resetDoneSubject" value="${subject.password.reset.done}" />
+		<property name="resetDoneFromEmail" value="${examinator.from.email}" />
+	</bean>
+	<bean id="standardAuthoritiesService"
+		class="org.terracotta.reference.exam.service.impl.DaoStandardAuthoritiesService">
+		<constructor-arg ref="userRoleDao" />
+	</bean>
+	<bean id="userService" class="org.terracotta.reference.exam.service.impl.DaoUserService">
+		<constructor-arg ref="standardAuthoritiesService" />
+		<constructor-arg ref="userDao" />
+		<constructor-arg ref="userRoleDao" />
+	</bean>
+	
+	<bean id="examServiceFactory" class="org.terracotta.reference.exam.service.impl.ExamServiceFactoryImpl">
+		<constructor-arg>
+			<bean class="org.terracotta.reference.exam.service.impl.DaoExamService" primary="false">
+				<constructor-arg ref="examDao" />
+				<constructor-arg ref="examResultDao" />
+				<constructor-arg ref="userService" />
+			</bean>
+		</constructor-arg>
+        <constructor-arg value="${hibernate.use_second_level_cache}" />
+        <property name="wrapperExamServiceClassName" value="org.terracotta.reference.exam.service.impl.CachingWrapperExamService"/>
+	</bean>
+    <bean id="examService" name="examService" factory-bean="examServiceFactory" factory-method="createExamService"/>
+	<bean id="examResultCommitHandler" class="org.terracotta.reference.exam.async.ExamResultCommitHandler" />
+	<bean id="examSessionService" class="org.terracotta.reference.exam.service.impl.ExamSessionServiceImpl" />
+	<!-- in-memory services alternatives -->
+	<!--
+	<bean id="standardAuthoritiesService" class="org.terracotta.reference.exam.service.impl.InMemoryStandardAuthoritiesService"/>
+	<bean id="userService" class="org.terracotta.reference.exam.service.impl.InMemoryUserService">
+		<constructor-arg ref="standardAuthoritiesService" />
+	</bean>
+	<bean id="examService" class="org.terracotta.reference.exam.service.impl.InMemoryExamCreationService" /> 
+	-->
+	
+	<!-- ========== -->
+	<!-- validators -->
+	<!-- ========== -->
+
+	<bean id="userValidator" class="org.terracotta.reference.exam.validator.UserValidator" />
+	<bean id="changePasswordValidator" class="org.terracotta.reference.exam.validator.ChangePasswordValidator" />
+	
+	<!-- ==== -->
+	<!-- misc -->
+	<!-- ==== -->
+
+	<bean id="examCreateEditUtil" class="org.terracotta.reference.exam.mvc.controller.exam.ExamCreateEditUtil" >
+		<constructor-arg ref="examService" />
+	</bean>
+	
+	<!-- =========================== -->
+	<!-- various tool configurations -->
+	<!-- =========================== -->
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${smtp.host}" />
+	</bean>
+	<bean id="freemarkerMailConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+		<property name="templateLoaderPath" value="/WEB-INF/templates" />
+	</bean>
+</beans>

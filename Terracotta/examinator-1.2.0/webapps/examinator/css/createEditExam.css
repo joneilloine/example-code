@@ -1,0 +1,24 @@
+div.section {
+	padding: 1mm;
+	margin: 1mm;
+}
+
+div.NestedSection {
+	background: #CFC4B8;
+}
+
+div.Question {
+	background: #B8AB98;
+}
+
+div.Question textarea {
+	width: 100%;
+	display: block;
+}
+
+div.Choice input {
+	margin: 1px 5px 1px 5px;
+}
+div.Choice input[type="text"] {
+	width: 25%;
+}

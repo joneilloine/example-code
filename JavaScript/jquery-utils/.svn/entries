@@ -1,0 +1,107 @@
+8
+
+dir
+387
+http://jquery-utils.googlecode.com/svn/trunk
+http://jquery-utils.googlecode.com/svn
+
+
+
+2008-12-01T23:27:56.122357Z
+387
+haineault@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+42e6dbca-fe45-0410-8bc7-9300d0be77b8
+
+build
+dir
+
+test
+dir
+
+build.yml
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+aac6190e703bb7a5b2fec1aa9fd24e20
+2008-11-24T19:37:52.230096Z
+384
+haineault
+
+dist
+dir
+
+version.txt
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+35a2a6f913f0f74e24c0cd4a5986ba46
+2008-10-22T20:30:40.198820Z
+227
+haineault
+
+demo
+dir
+
+build.py
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+10a0182e456f6b40717af5891570b700
+2008-11-10T04:28:40.702979Z
+255
+hhh333
+has-props
+
+src
+dir
+
+MIT-LICENSE.txt
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+a5024f79e181f207969c7809fbb05b3f
+2008-05-29T11:45:49.758901Z
+106
+hhh333
+
+standalone
+dir
+
+Makefile
+file
+
+
+
+
+2008-12-05T21:00:53.000000Z
+6c96c8f2446d653b983ab812a080d1d3
+2008-10-26T23:45:34.284547Z
+233
+hhh333
+

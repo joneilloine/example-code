@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="Stylesheet" media="screen" href="data/testsuite.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2/jquery.min.js"></script>
+        <script type="text/javascript" src="../demo/data/ui.js"></script>
+        <script type="text/javascript" src="../dist/jquery.utils.js"></script>
+        <script type="text/javascript" src="../src/ui.dropslide.js"></script>
+        <script type="text/javascript" src="../src/ui.timepickr.js"></script>
+        <script type="text/javascript" src="data/testrunner.js"></script>
+        <script type="text/javascript" src="unit/jquery.utils.js"></script>
+        <script type="text/javascript" src="unit/jquery.anchorHandler.js"></script>
+        <script type="text/javascript" src="unit/jquery.cookie.js"></script>
+        <!--script type="text/javascript" src="unit/jquery.cycle.js"></script-->
+        <script type="text/javascript" src="unit/jquery.countdown.js"></script>
+        <script type="text/javascript" src="unit/jquery.strings.js"></script>
+        <!--script type="text/javascript" src="unit/jquery.valid.js"></script-->
+        <script type="text/javascript" src="unit/jquery.i18n.js"></script>
+        <script type="text/javascript" src="unit/ui.timepickr.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#jQueryVersion span').text($.fn.jquery);
+            });
+        </script>
+        <style>
+        .fixtures {
+            position:absolute;
+            top:-1000px;
+            left:-1000px;
+        }
+        </style>
+    </head>
+    <body id="body">
+        <h2 id="banner">Unit tests: <span class="pass">passed</span><span class="fail">failed</span></h2>
+        <h4 id="userAgent"></h4> 
+        <h5 id="jQueryVersion">jQuery version <span></span></h5> 
+        <div id="main"></div>
+        <ol id="tests"></ol>
+        <div id="fixtures" class="fixtures"></div>
+        <div id="fixtures2" class="fixtures"></div>
+    </body>
+</html>

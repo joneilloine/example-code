@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<tc:tc-config xmlns:tc="http://www.terracotta.org/config">
+    <servers>
+        <server host="%i" name="sample">
+            <data>data/server-data</data>
+            <logs>logs/server-logs</logs>
+        </server>
+    </servers>
+    <clients>
+        <logs>logs/client-logs/%(webserver.log.name)</logs>
+    </clients>
+    <application>
+        <dso>
+            <instrumented-classes>
+                <include>
+                    <class-expression>example.Cart</class-expression>
+                </include>
+                <include>
+                    <class-expression>example.Item</class-expression>
+                </include>
+            </instrumented-classes>
+            <web-applications>
+                <web-application>example2</web-application>
+            </web-applications>
+        </dso>
+    </application>
+</tc:tc-config>

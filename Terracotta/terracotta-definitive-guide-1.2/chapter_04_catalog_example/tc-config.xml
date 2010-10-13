@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:tc-config xmlns:con="http://www.terracotta.org/config">
+  <system>
+    <configuration-model>development</configuration-model>
+  </system>
+  <servers>
+    <server name="localhost">
+      <dso-port>9510</dso-port>
+      <jmx-port>9520</jmx-port>
+      <data>terracotta/server-data</data>
+      <logs>terracotta/server-logs</logs>
+    </server>
+  </servers>
+  <clients>
+    <logs>terracotta/client-logs</logs>
+  </clients>
+  <application>
+    <dso>
+      <instrumented-classes>
+        <include>
+          <!--include all classes in the example package for bytecode instrumentation-->
+          <class-expression>example..*</class-expression>
+        </include>
+      </instrumented-classes>
+      <locks>
+        <autolock>
+          <method-expression>void *..*(..)</method-expression>
+          <lock-level>write</lock-level>
+        </autolock>
+      </locks>
+      <roots>
+        <root>
+          <field-name>example.Roots.barrier</field-name>
+        </root>
+        <root>
+          <field-name>example.Roots.catalog</field-name>
+        </root>
+        <root>
+          <field-name>example.Roots.activeShoppingCarts</field-name>
+        </root>
+      </roots>
+    </dso>
+  </application>
+</con:tc-config>

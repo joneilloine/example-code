@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<project name="zipwire-rest" default="all" basedir=".">
+  <property name="temp" value="${user.home}/buildarea" />
+  <property name="devsource" value="./.." />
+  <property name="libs" value="./../lib" />
+  <property name="builddir" value="${temp}\build"/>
+  <property name="target" value="${builddir}/target" />
+  <property name="targetdir" value="${builddir}/targetdir" />	
+	
+  <path id="classpath">
+    <pathelement path="${libs}" />
+      <fileset dir="${libs}">
+        <include name="**/*.jar"/>
+      </fileset>
+    <pathelement location="${target}/classes" />
+  </path>
+
+  <target name="clean">
+    <delete dir="${compile.outdir}" />
+    <delete dir="${cvsloc}" />
+    <delete dir="${target}" />
+  </target>
+
+  <target name="prepare">
+    <mkdir dir="${target}/classes"/>
+    <mkdir dir="${target}/war"/>
+  </target> 
+
+
+  <target name="build-app" description="Compile the source code">
+    <javac srcdir="${devsource}/src" destdir="${target}/classes">
+      <include name="**/*.java" />
+      <exclude name="*.xml" />
+      <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="build-war">
+    <jar jarfile="${target}/../${ant.project.name}.jar" basedir="${target}/classes" />
+  </target>
+
+  <target name="rebuild" depends="clean, prepare, build-app, build-war" />
+
+  <target name="all" depends="rebuild" />
+
+</project>

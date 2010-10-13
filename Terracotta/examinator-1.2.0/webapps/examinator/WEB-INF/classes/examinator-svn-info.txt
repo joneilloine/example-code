@@ -1,0 +1,11 @@
+Path: .
+URL: https://svn.terracotta.org/repo/forge/projects/exam/tags/release-1.2.0
+Repository Root: https://svn.terracotta.org/repo/forge
+Repository UUID: 591de9ec-d6d5-471c-8416-afe4a41b277d
+Revision: 18390
+Node Kind: directory
+Schedule: normal
+Last Changed Author: hhuynh
+Last Changed Rev: 18390
+Last Changed Date: 2009-08-18 15:00:37 -0700 (Tue, 18 Aug 2009)
+

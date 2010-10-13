@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=
+		"http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	<secured attributes="ROLE_STUDENT,ROLE_ADMINISTRATOR" />
+	<action-state id="startExam">
+		<on-entry>
+			<evaluate expression="examSessionService.startExam(currentUser.name, requestParameters.examId)"/>
+		</on-entry>
+		<evaluate expression="examSessionService.getFirstQuestion(currentUser.name).getId()" result="flowScope.questionId" />
+		<transition to="showQuestion"/>
+		<!-- 
+			If there is no examId in requestParameters, or the user supplies a non-existent examId,
+			ExamNotInProgressException will be thrown (from examSessionService.getFirstQuestion).
+			Redirecting to context root page on invalid input.
+		 -->
+		<transition on-exception="org.terracotta.reference.exam.service.exceptions.ExamNotInProgressException" to="return"></transition>
+	</action-state>
+	<view-state id="showQuestion" view="exam/exam" model="examQuestionForm">
+		<binder>
+			<binding property="userChoiceId"/>
+			<binding property="markQuestionForReview"/>
+		</binder>
+		<on-render>
+			<evaluate expression="examSessionService.getOngoingExamForUser(currentUser.name).getName()" result="viewScope.examName"/>
+			<evaluate expression="examSessionService.getExamQuestionForm(currentUser.name, flowScope.questionId)" result="viewScope.examQuestionForm"/>
+			<evaluate expression="examSessionService.getQuestionsMarkedForReview(currentUser.name)" result="viewScope.questionsMarkedForReview"/>
+			<evaluate expression="examSessionService.getExamRemainingTimeInSeconds(currentUser.name)" result="viewScope.remainingTimeInSeconds"/>
+		</on-render>
+		<transition on="next">
+			<evaluate expression="examSessionService.evaluateExamQuestionForm(currentUser.name, examQuestionForm)"/>
+			<evaluate expression="examSessionService.getNextQuestion(currentUser.name, requestParameters.currentQuestionId).getId()" result="flowScope.questionId"/>
+		</transition>
+		<transition on="previous">
+			<evaluate expression="examSessionService.evaluateExamQuestionForm(currentUser.name, examQuestionForm)"/>
+			<evaluate expression="examSessionService.getPreviousQuestion(currentUser.name, requestParameters.currentQuestionId).getId()" result="flowScope.questionId"/>
+		</transition>
+		<transition on="showAllQuestions" to="showAllQuestions">
+			<evaluate expression="examSessionService.evaluateExamQuestionForm(currentUser.name, examQuestionForm)"/>
+		</transition>
+		<transition on="showQuestion">
+			<evaluate expression="examSessionService.evaluateExamQuestionForm(currentUser.name, examQuestionForm)"/>
+			<set name="flowScope.questionId" value="requestParameters.showQuestionId"/>
+		</transition>
+		<transition on="confirmFinishExam" to="confirmFinishExam">
+			<evaluate expression="examSessionService.evaluateExamQuestionForm(currentUser.name, examQuestionForm)"/>
+		</transition>
+	</view-state>
+	<view-state id="showAllQuestions" view="exam/questions">
+		<on-render>
+			<evaluate expression="examSessionService.getOngoingExamForUser(currentUser.name).getName()" result="viewScope.examName"/>
+			<evaluate expression="examSessionService.getAllQuestions(currentUser.name)" result="viewScope.questions"/>
+			<evaluate expression="examSessionService.getQuestionsMarkedForReview(currentUser.name)" result="viewScope.questionsMarkedForReview"/>
+			<evaluate expression="examSessionService.getAnsweredQuestions(currentUser.name)" result="viewScope.answeredQuestions"/>
+			<evaluate expression="examSessionService.getExamRemainingTimeInSeconds(currentUser.name)" result="viewScope.remainingTimeInSeconds"/>
+			<evaluate expression="examSessionService.getUnansweredQuestions(currentUser.name)" result="viewScope.unansweredQuestions"/>
+			<evaluate expression="viewScope.answeredQuestions.size()" result="viewScope.answeredQuestionsCount"/>
+			<evaluate expression="viewScope.unansweredQuestions.size()" result="viewScope.unansweredQuestionsCount"/>
+			<evaluate expression="viewScope.questionsMarkedForReview.size()" result="viewScope.questionsMarkedForReviewCount"/>
+		</on-render>
+		<transition on="showQuestion" to="showQuestion">
+			<set name="flowScope.questionId" value="requestParameters.questionId"/>
+		</transition>
+		<transition on="confirmFinishExam" to="confirmFinishExam" />
+	</view-state>
+	<view-state id="confirmFinishExam" view="exam/finish">
+		<on-render>
+			<evaluate expression="examSessionService.getAllQuestions(currentUser.name).size()" result="viewScope.totalQuestions"/>
+			<evaluate expression="examSessionService.getQuestionsMarkedForReview(currentUser.name).size()" result="viewScope.questionsMarkedForReviewCount"/>
+			<evaluate expression="examSessionService.getAnsweredQuestions(currentUser.name).size()" result="viewScope.answeredQuestionsCount"/>
+			<evaluate expression="examSessionService.getUnansweredQuestions(currentUser.name).size()" result="viewScope.unansweredQuestionsCount"/>
+			<evaluate expression="examSessionService.getExamRemainingTimeInSeconds(currentUser.name)" result="viewScope.remainingTimeInSeconds"/>
+		</on-render>
+		<transition on="showAllQuestions" to="showAllQuestions"/>
+		<transition on="endExam" to="endExam"/>
+	</view-state>
+	<view-state id="endExam" view="exam/finished">
+		<on-entry>
+			<evaluate expression="examSessionService.endExam(currentUser.name)" result="viewScope.examResult"/>
+		</on-entry>
+		<transition on="return" to="return"/>
+	</view-state>
+	<view-state id="error" view="exam/error">
+		<transition on="return" to="return" />
+		<transition on="selectExam" to="returnAndShowExamList" />
+		<transition on="viewPreviousResults" to="returnAndShowResults" />
+		<transition on="continueExam" to="showQuestion">
+			<evaluate expression="examSessionService.getFirstQuestion(currentUser.name).getId()" result="flowScope.questionId"/>
+		</transition>
+	</view-state>
+	<end-state id="return" view="externalRedirect:contextRelative:/welcome.do" />
+	<end-state id="returnAndShowResults" view="externalRedirect:contextRelative:/exam/results.do" />
+	<end-state id="returnAndShowExamList" view="externalRedirect:contextRelative:/exam/list.do" />
+	<global-transitions>
+		<transition on-exception="org.terracotta.reference.exam.service.exceptions.ExamAlreadyInProgressException" to="error">
+			<set name="flashScope.errorIncludePage" value="'include/error/examAlreadyInProgress.jsp'" />
+		</transition>
+		<transition on-exception="org.terracotta.reference.exam.service.exceptions.ExamNotInProgressException" to="error">
+			<set name="flashScope.errorIncludePage" value="'include/error/examNotInProgress.jsp'" />
+		</transition>
+		<transition on-exception="org.terracotta.reference.exam.service.exceptions.ExamTimedOutException" to="error">
+			<set name="flashScope.errorIncludePage" value="'include/error/examTimedOut.jsp'" />
+			<set name="flashScope.examResult" value="rootCauseException.examResult" />
+		</transition>
+	</global-transitions>
+</flow>

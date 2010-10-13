@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<terracotta-hibernate-cache-configuration> 
+  <default-configuration> 
+    <time-to-idle-seconds>3600</time-to-idle-seconds> 
+    <time-to-live-seconds>86400</time-to-live-seconds> 
+  </default-configuration> 
+
+  <!-- eternal caches - read-only, never evict -->
+  <cache>
+    <region-name>org.terracotta.reference.exam.domain.UserRole</region-name> 
+    <configuration>
+      <time-to-idle-seconds>0</time-to-idle-seconds>
+      <time-to-live-seconds>0</time-to-live-seconds>
+    </configuration>
+  </cache>
+
+  <!-- user info - only useful while user still doing things. no ttl, tti=2 minutes  -->
+  <cache>
+    <region-name>org.terracotta.reference.exam.domain.User</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.User.roles</region-name> 
+
+    <configuration>
+      <time-to-idle-seconds>120</time-to-idle-seconds>
+      <time-to-live-seconds>0</time-to-live-seconds>
+    </configuration>
+  </cache>
+ 
+  <!-- exam cache - exams are effectively read-only, set long tti/ttl --> 
+  <cache> 
+    <region-name>org.terracotta.reference.exam.domain.Exam</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Section</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Section.questions</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Section.sections</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Question</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Question.choices</region-name> 
+    <region-name>org.terracotta.reference.exam.domain.Choice</region-name> 
+    
+    <configuration> 
+      <time-to-idle-seconds>3600</time-to-idle-seconds> 
+      <time-to-live-seconds>86400</time-to-live-seconds> 
+    </configuration> 
+  </cache> 
+
+</terracotta-hibernate-cache-configuration> 
+
